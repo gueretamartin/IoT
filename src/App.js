@@ -1,78 +1,24 @@
-
-
-
 import React, { Component } from 'react';
- import ToggleButton from 'react-toggle-button';
-	  import logo from './logo.svg';
-	  import './App.css';
-	 
-	  class App extends Component {
-   constructor(props) {
-          super(props);     this.state = { ledOn: false,par:'' }
-                            ;
-   }
+import { useState, useEffect } from 'react';
+import './App.css';
+import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom';
+import Sensor from './components/Sensor';
 
-   setLedState(state){
-     this.setState({ ledOn: state !== '0' })
-   }
+export default function App() {
 
-   setPar(state){
-    this.setState({ par: state })
-  }
+  return (
+    <div className="App">
+      <Router>
+        <Route path="/">
+         <Home />
+         <Sensor />
+        </Route>
+      </Router>
+    </div>
+  )
+};
 
- 
 
-   componentDidMount() { 
-
-     fetch('/led')
-       .then(response => response.text())
-       .then(state => this.setLedState(state));
-
-    setTimeout(function() { //Start the timer
-          fetch('/getTemperature', { method: 'GET' })
-           .then(response => response.text())
-           .then(response => console.log(response))
-           ;
-    }.bind(this), 1000)
-   }
-
-   handleStateChange(ledOn) {
-     fetch('/led', { method: 'PUT', body: ledOn ? '0' : '1' })
-       .then(response => response.text())
-       .then(state => this.setLedState(state));
-   }
-
-  //  handleStateChange(ledOn) {
-  //   fetch('/getTemperature', { method: 'GET', body: ledOn ? '0' : '1' })
-  //     .then(response => response.text())
-  //     .then(state => this.setLedState(state));
-  // }
-
-readTemperature(){
- 
-    fetch('/getTemperature', { method: 'GET' })
-     .then(response => response.text())
-     .then(response => console.log(response))
-     //.then(response => this.setPar(response))
-    
-     ;
-
+function Home() {
+  return <h2>Home</h2>;
 }
-
-    render() {
-      return (
-        <div className="App">
-          <header className="App-header">
-	            {/* <img src={logo} className="App-logo" alt="logo" />  */}
-                      <ToggleButton
-            value={this.state.ledOn}
-            onToggle={value => this.handleStateChange(value)}
-          />
-
-         <p>
-            { this.readTemperature()}
-            </p>
-	          </header>
-	        </div>
-	      )}};
-        export default App;
