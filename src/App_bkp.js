@@ -1,8 +1,6 @@
  import React, { Component } from 'react';
  import ToggleButton from 'react-toggle-button';
-	  import logo from './logo.svg';
 	  import './App.css';
-    // import BarChart  from './components/bar_chart';
 	 
 	  class App extends Component {
    constructor(props) {
