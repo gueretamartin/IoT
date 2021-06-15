@@ -15,8 +15,6 @@ Adafruit_BME280 bme;
 
 unsigned long delayTime;
 
-
-
 WiFiServer server(80);
 Application app;
 bool ledOn; 
@@ -51,8 +49,6 @@ void setup() {
   app.use(staticFiles());
     bool status;
 
-  // default settings
-  // (you can also pass in a Wire library object like &Wire2)
   status = bme.begin(0x76);  
   server.begin();
 }
@@ -62,32 +58,5 @@ void loop() {
   if (client.connected()) {
     app.process(&client);
   } 
- // printValues();
- // delay(1000);
 }
 
-/*
-void printValues() {
-  Serial.print("Temperature = ");
-  Serial.print(bme.readTemperature());
-  Serial.println(" *C");
-  
-  // Convert temperature to Fahrenheit
-  /*Serial.print("Temperature = ");
-  Serial.print(1.8 * bme.readTemperature() + 32);
-  Serial.println(" *F"); 
-  
-  Serial.print("Pressure = ");
-  Serial.print(bme.readPressure() / 100.0F);
-  Serial.println(" hPa");
-
-  Serial.print("Approx. Altitude = ");
-  Serial.print(bme.readAltitude(SEALEVELPRESSURE_HPA));
-  Serial.println(" m");
-
-  Serial.print("Humidity = ");
-  Serial.print(bme.readHumidity());
-  Serial.println(" %");
-
-  Serial.println();
-} */

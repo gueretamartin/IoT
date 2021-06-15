@@ -1,31 +1,28 @@
-import React, { Component } from 'react';
-import { useState, useEffect } from 'react';
-import Graph from './Graph'
-
+import React  from 'react';
+import {useEffect } from 'react';
 
 export default function Sensor(props) {
-    // const [ledOn, setLed] = useState(false);
-    // const [temperature, setTemperature] = useState("0");
     
-
     useEffect(() => {
         function tick() {
+            var time = new Date().getTime();
+            props.setTime(time);
+
             fetch('/getTemperature', { method: 'GET' })
                 .then(response => response.text())
-                .then(temperature => props.setTemperature(temperature, 0)) 
+                .then(temperature => props.setTemperature(temperature))
+                
         }
+
         const timerId = setInterval(() => tick(), 2000)
+
         return function cleanUp() {
             clearInterval(timerId);
         }
-
     })
     return (
         <div>
-            {/* <Graph />  */}
-            {/* <canvas id="smoothie-chart" width="500" height="100"></canvas> */}
             <h1>"Hello"</h1>
-            {/* <h1>{props.setTemperature}</h1> */}
         </div>
     )
 };

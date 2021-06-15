@@ -1,31 +1,32 @@
-import React, { Component } from 'react';
-import { useState, useEffect } from 'react';
-import './App.css';
-import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useState } from 'react'; 
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 import Sensor from './components/Sensor';
 import Graph from './components/Graph';
+import History from './components/History';
+import './App.css';
 
-const { default: SmoothieComponent, TimeSeries } = require('react-smoothie');
+const { TimeSeries } = require('react-smoothie');
 
 export default function App() {
-  const [ts1,setTs1] = useState(new TimeSeries({}));
-  // const [ts2,setTs2] = useState(new TimeSeries({}))
-  const [temperature, setTemperature] = useState("0");
-
+  const [ts1] = useState(new TimeSeries({}));
+  const [time, setTime] = useState("");
+  const [temperature, setTemperature] = useState("0"); 
+  
   return (
     <div className="App">
       <Router>
         <Route path="/">
-          <Sensor setTemperature={setTemperature} />
-          <Home temperature = {temperature}/>
-          <Graph temp={temperature} ts1 = {ts1}    /> 
+          <Sensor setTime={setTime} setTemperature={setTemperature}  />
+          <Home temperature={temperature} time={time} />
+          <Graph temp={temperature} ts1={ts1} time={time} />
+          <History temp = {temperature} time={time}  />
         </Route>
       </Router>
     </div>
   )
 };
 
-
 function Home(props) {
-  return <h2>{props.temperature}</h2>;
+  return <h2>{props.temperature} {props.time}</h2>;
 }
