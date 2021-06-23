@@ -1,32 +1,27 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react'; 
-import { Route, BrowserRouter as Router } from 'react-router-dom';
-import Sensor from './components/Sensor';
-import Graph from './components/Graph';
-import History from './components/History';
+import React from 'react';
+import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
+import Section from './components/Section';
+import About from './components/About';
+import Home from './components/Home';
 import './App.css';
+import NavBar from './components/NavBar';
+import "bootswatch/dist/darkly/bootstrap.min.css";
 
-const { TimeSeries } = require('react-smoothie');
 
 export default function App() {
-  const [ts1] = useState(new TimeSeries({}));
-  const [time, setTime] = useState("");
-  const [temperature, setTemperature] = useState("0"); 
-  
+
   return (
-    <div className="App">
-      <Router>
+    <Router>
+      <div>
         <Route path="/">
-          <Sensor setTime={setTime} setTemperature={setTemperature}  />
-          <Home temperature={temperature} time={time} />
-          <Graph temp={temperature} ts1={ts1} time={time} />
-          <History temp = {temperature} time={time}  />
+          <NavBar link={Link} /> 
+          <Route exact path ="/" component={Home} />
+          <Route exact path="/section" component={Section} />
+          <Route exact path="/about" component={About} /> 
         </Route>
-      </Router>
-    </div>
+      </div>
+    </Router>
   )
 };
 
-function Home(props) {
-  return <h2>{props.temperature} {props.time}</h2>;
-}
+
